@@ -1,4 +1,6 @@
-# Scrape bayut.com
+# Final project: Exelium 
+# Create a prototype for real estate analysis. 
+
 """
 Commented to show all the elements I need to scrape from the website. 
 
@@ -19,7 +21,11 @@ URL = class="_287661cb"
 links = wait.until(EC.presence_of_element_located((By.CLASS_NAME , "_357a9937"))).find_elements(By.CSS_SELECTOR, "li>article>._4041eb80>a")
 
 """
+import os
 
+# Setting environment file
+from dotenv import load_dotenv
+load_dotenv()
 
 from array import array
 from pickle import APPEND
@@ -27,31 +33,29 @@ import pandas as pd
 import numpy as np
 from IPython.display import display
 
-
-# waiting
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-
-# import webdriver
+# Import selenium webdriver
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
 from selenium.webdriver.common.by import By
+# Waiting
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
+# create webdriver object
 options = webdriver.ChromeOptions()
 options.add_experimental_option("excludeSwitches", ["enable-automation"])
 options.add_experimental_option("useAutomationExtension", False)
-
 service = ChromeService(executable_path = r'./Driver/chromedriver')
 
-# create webdriver object
 driver = webdriver.Chrome(service=service, options=options)
 
-# Variable to set the URL
-url = "https://www.bayut.com/for-sale/property/dubai/jumeirah-lake-towers-jlt/"
+# Variable to set the URL. 
+# I am using a .env file to load the URL in case the URL link triggers any alerts on bayut.com and flags my ip.
+url = os.getenv('URL')
 
-# Function to scrape from URL
+# Function to scrape from pre-defined URL
 
-def open_chrome_new():
+def first_deliverable():
     try:    
         name = []
         driver.get(url)
@@ -114,7 +118,6 @@ def open_chrome_new():
 
         # saving the dataframe 
         df_all_details.to_csv('./result.csv') 
-        
     
     finally: # regardsless of outcome above kill the driver because unclosed drivers are killing my flow.
 
@@ -122,4 +125,7 @@ def open_chrome_new():
         driver.close()
         driver.quit()
     
-open_chrome_new()
+first_deliverable()
+
+ 
+
