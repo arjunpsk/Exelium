@@ -69,7 +69,7 @@ service = ChromeService(executable_path = r'./Driver/chromedriver')
 driver = webdriver.Chrome(service=service, options=options)
 
 # Variable to set the URL. 
-# I am using a .env file to load the URL in case the URL link triggers any alerts on bayut.com and flags my ip.
+# I am using a .env file to load the URL in case the URL link triggers any alerts on the main site and flags my ip.
 url = os.getenv('URL')
 
 # Function to scrape from pre-defined URL
