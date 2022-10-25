@@ -88,9 +88,10 @@ def get_urls():
         df_all_details.to_csv('Location_URLs.csv', mode='w', index=False, header=True)
 
         display(df_all_details)
-        return(df_all_details)
+        
         driver.close()
         driver.quit()
+        return(df_all_details) # this is the addition for the streamlit app.
 
 get_urls()
 
