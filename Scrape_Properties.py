@@ -172,7 +172,7 @@ def scrape_properties():
     finally: # regardsless of outcome above kill the driver because unclosed drivers are killing my flow.
 
         # Save to a CSV file. 
-        df_all_details.to_csv('Properties_' + file_name + '.csv', mode='w', index=True, header=True)
+        df_all_details.to_csv('Properties_' + file_name + '.csv', mode='w', index=False, header=True)
         display(df_all_details)
 
         driver.implicitly_wait(10) 

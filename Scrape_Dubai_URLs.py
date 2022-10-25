@@ -1,7 +1,7 @@
 # Locations = class="f1ab04e0"
 # Single location = class="_1c4ffff0"
 
-from ast import Num
+# from ast import Num
 import os
 
 # Setting environment file
@@ -9,9 +9,9 @@ from dotenv import load_dotenv
 load_dotenv()
 
 from array import array
-from pickle import APPEND, TRUE
+# from pickle import APPEND, TRUE
 import pandas as pd
-import numpy as np
+# import numpy as np
 from IPython.display import display
 from datetime import datetime
 
@@ -19,7 +19,7 @@ from datetime import datetime
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
 from selenium.webdriver.common.by import By
-from selenium.common.exceptions import NoSuchElementException
+# from selenium.common.exceptions import NoSuchElementException
 
 # Waiting
 from selenium.webdriver.support.ui import WebDriverWait
@@ -36,6 +36,9 @@ options.add_experimental_option("useAutomationExtension", False)
 service = ChromeService(executable_path = r'./Driver/chromedriver')
 
 driver = webdriver.Chrome(service=service, options=options)
+wait = WebDriverWait(driver, 5)
+# driver.implicitly_wait(10) # gives an implicit wait for 20 seconds
+
 # driver.implicitly_wait(10) # gives an implicit wait for 20 seconds
 
 url = os.getenv('BASE_URL')
@@ -44,10 +47,7 @@ def get_urls():
   
     try:    
         driver.get(url)
-        wait = WebDriverWait(driver, 10)
-
         driver.maximize_window() # For maximizing window
-        # driver.implicitly_wait(10) # gives an implicit wait for 20 seconds
         
         # The number of searches visible at any given time is 24 listings per page.
         # So first we have to find the total number of properties in a given search parameter. 
@@ -57,10 +57,10 @@ def get_urls():
     
 # _1c4ffff0
 
-        print("This is just decorative for the sake of easy readability: \n\n\n*************** STARTS FROM HERE ***************", end="\n\n\n")
+        # print("This is just decorative for the sake of easy readability: \n\n\n*************** STARTS FROM HERE ***************", end="\n\n\n")
    
 
-        print("This is just decorative for the sake of easy readability: HELLO WORLD - MIC CHECK ONE OH - GOODBYE WORLD", end="\n\n\n")
+        # print("This is just decorative for the sake of easy readability: HELLO WORLD - MIC CHECK ONE OH - GOODBYE WORLD", end="\n\n\n")
 
         # Define list variable 
         locations = []
@@ -79,44 +79,19 @@ def get_urls():
             locations.append(List_dict)
 
         df_all_details = pd.DataFrame(locations, columns=['Name', 'URL', 'Properties'])
-        display(df_all_details)
+        # display(df_all_details)
 
     finally: # regardsless of outcome above kill the driver because unclosed drivers are killing my flow.
 
         # Save to a CSV file. 
-        df_all_details.to_csv('Location_URLs_' + file_name + '.csv', mode='w', index=True, header=True)
-        display(df_all_details)
+        # df_all_details.to_csv('Location_URLs_' + file_name + '.csv', mode='w', index=False, header=True)
+        df_all_details.to_csv('Location_URLs.csv', mode='w', index=False, header=True)
 
+        display(df_all_details)
+        return(df_all_details)
         driver.close()
         driver.quit()
 
 get_urls()
 
 
-
-
-# # Python3 code to demonstrate
-# # attributes of now()
-
-# # importing datetime module for now()
-# import datetime
-
-# # using now() to get current time
-# current_time = datetime.datetime.now()
-
-# # Printing attributes of now().
-# print("The attributes of now() are :")
-
-# print("Year :", current_time.year)
-
-# print("Month : ", current_time.month)
-
-# print("Day : ", current_time.day)
-
-# print("Hour : ", current_time.hour)
-
-# print("Minute : ", current_time.minute)
-
-# print("Second :", current_time.second)
-
-# print("Microsecond :", current_time.microsecond)
