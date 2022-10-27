@@ -111,15 +111,19 @@ def scrape_properties(user_selected_url):
           
             for listing in listings:
 
-                wait.until(EC.presence_of_element_located((By.CLASS_NAME, '_7afabd84')))
+                # wait.until(EC.presence_of_element_located((By.CLASS_NAME, '_7afabd84')))
 
                 List_dict={
                 'Name':listing.find_element(By.CLASS_NAME, '_7afabd84').text,
                 'Price':listing.find_element(By.CLASS_NAME, 'f343d9ce').text,
                 'URL':listing.find_element(By.CLASS_NAME, '_287661cb').get_attribute("href"),
-                'Sqft':listing.find_element(By.XPATH, '//*[@aria-label="Area"]').text
+                # 'Sqft':listing.find_element(By.XPATH, '//*[@aria-label="Area"]').text
+                # 'Beds':listing.find_element(By.XPATH, './/*[@class="b6a29bc0"][@aria-label="Beds"]').text,
+                # 'Baths':listing.find_element(By.XPATH, './/*[@class="b6a29bc0"][@aria-label="Baths"]').text,
+                'Sqft':listing.find_element(By.XPATH, './/*[@class="b6a29bc0"][@aria-label="Area"]').text
                 }
-
+                # print(listing)
+                # print(listing.find_element(By.XPATH, '//li/span[@class="b6a29bc0"][@aria-label="Area"]/span').text)
                 details_of_listing.append(List_dict)
   
             df_all_details = pd.DataFrame(details_of_listing, columns=['Name', 'URL', 'Sqft', 'Price'])
@@ -135,7 +139,7 @@ def scrape_properties(user_selected_url):
                 #Checks if there are more pages with links 
                 next_link = driver.find_element(By.XPATH, "//a[@title='Next']")
                 next_link.click() 
-                time.sleep(5) 
+                # time.sleep(5) 
                 print(pagecounter)
                 pagecounter += 1
 
@@ -149,7 +153,7 @@ def scrape_properties(user_selected_url):
         df_all_details.to_csv(CSV_filename, mode='w', index=False, header=True)
         # display(df_all_details)
 
-        driver.implicitly_wait(10) 
+        driver.implicitly_wait(3) 
         driver.close()
         driver.quit()
         return df_all_details
@@ -167,7 +171,7 @@ with cont_url:
 
     user_select = st.selectbox('Select your asset:', options=prop_url, format_func=lambda x: dic[x])
 # 
-    st.write("Calling Arjun's get_urls() function.")
+    # st.write("Calling Arjun's get_urls() function.")
     # option = st.selectbox('Select your asset:', url_list) 
     st.write('You selected:', user_select)
     st.dataframe(df_url_list, 1000, 250)
